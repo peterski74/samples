@@ -1,0 +1,76 @@
+﻿ <!-- Right side column. Contains the navbar and content of the page -->
+<aside class="right-side" ng-class="rightside">
+
+    <onboarding-popover enabled="onboardingEnabled" steps="onboardingSteps" on-finish-callback='myCallbackFunction' step-index='stepIndex'></onboarding-popover>
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="pull-right">
+                <a class="btn btn-primary btn-round"
+                   ng-click="exportCSVModal()" tooltip="Export to Excel"
+                   tooltip-popup-delay="1000" tooltip-placement="bottom"><i class="fa fa-file-excel-o"></i></a>
+                <a id="addContact" class="btn btn-success btn-round" data-ng-click="addContact()" tooltip="Add a contact"
+                   tooltip-popup-delay="1000" tooltip-placement="bottom">
+                    <i class="fa fa-plus"></i>
+                </a>
+        </div>
+        <h1>
+            <i class="fa fa-users"></i> CRM  
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="input-group">
+            <input type="text" ng-model="myGlobalFilter" placeholder="Search CRM..." class="form-control">
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+        <br />
+        <div class="row">
+            <div data-ng-repeat="item in gridDisplayItem">
+                {{gridDisplayItem.CRM_FirstName}}
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body" style="padding-top: 0px;">
+                        <div>
+                            <table tr-ng-grid="" items="contactItems" class="table table-striped" page-items="10"
+                                   filter-by="myGlobalFilter" total-items="myItemsTotalCount"
+                                   on-data-required="onServerSideItemsRequested(currentPage, pageItems, filterBy, filterByFields, orderBy, orderByReverse)">
+                                <thead>
+                                    <tr>
+                                        <th field-name="CRM_AccountName" display-align="left" display-name="Account" enable-filtering="false"></th>
+                                        <th field-name="CRM_Opportunity" display-align="left" display-name="Stage" enable-filtering="false"></th>
+                                        <th class="hidden-xs hidden-sm hidden-md" field-name="Priority" display-align="left" display-name="Priority" cell-width="8em" 
+                                            enable-filtering="false"></th>
+                                        <th class="hidden-xs hidden-sm hidden-md" field-name="CRM_Email" display-align="left" display-name="Email" enable-filtering="false"></th>
+                                        <th class="hidden-xs hidden-sm hidden-md" field-name="CRM_DateAdded" display-align="left" display-name="Date" enable-filtering="false" title="Date Added"></th>
+                                        <th display-align="center" cell-width="2em">
+                                            <div class="tr-ng-title">&nbsp;</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td field-name="CRM_AccountName"></td>
+                                        <td field-name="CRM_Opportunity"></td>
+                                        <td class="hidden-xs hidden-sm hidden-md" field-name="Priority"></td>
+                                        <td class="hidden-xs hidden-sm hidden-md" field-name="CRM_Email"></td>
+                                        <td class="hidden-xs hidden-sm hidden-md" field-name="CRM_DateAdded">
+                                            <div> {{gridDisplayItem.CRM_DateAdded| date:globalItems.dateFormat}}</div>
+                                        </td>
+                                        <td cell-width="2em" align="right"><button class="btn btn-primary btn-sm" ng-click="contactDetails(gridItem)" tooltip="Display Contact details" tooltip-popup-delay="1000" tooltip-placement="bottom">Show</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section><!-- right col -->
+</aside><!-- /.right-side -->
